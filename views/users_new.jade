@@ -1,0 +1,21 @@
+extends layout
+
+block content
+  h1= title
+  p #{title}
+  
+  form(action="/users", method="post")
+    fieldset
+      .form-group
+        label(for="name") Name
+        .control
+          input(type="text", name="name", id="name")
+
+      .form-group
+        label(for="gender") Gender
+        .control
+          input(type="text", name="gender", id="gender")
+
+      
+      .actions
+        input(type="submit", value="Submit", class="btn btn-default")
