@@ -1,1 +1,1 @@
-web: DEBUG=workspace:* npm start
+web: DEBUG=workspace:* supervisor bin/www

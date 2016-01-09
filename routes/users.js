@@ -54,12 +54,34 @@ router.get('/', function(req, res, next) {
   }, function(err, users){
     if (err) throw err;
     
-    console.log(users);
-    res.render('users_index', {title: 'All Users'});  
+    res.render('users_index', {title: 'All Users', users: users});  
   });
   
 });
 
+/* GET show a single user. */
+router.get('/:id', function(req, res, next) {
+  var userID = req.param('id');
+  var query = [
+    'MATCH (user:User)',
+    'WHERE ID(user) = {id}',
+    'RETURN user'
+  ].join('\n');
+  var params = {
+    id: Number(userID)
+  };
+  
+  neo4jDB.cypher({
+    query: query,
+    params: params
+  }, function(err, user){
+    if (err) throw err;
+    
+    console.log(user);
+    
+    return res.status(200).json(id=userID,user=user);
+  });
+});
 
 
 
