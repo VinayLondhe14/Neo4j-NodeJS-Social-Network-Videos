@@ -1,10 +1,17 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
-  ul
-    li
-      a(href="/users") All Users
-    li
-      a(href="/users/new") Create New User
+  #branding
+    h1= title
+    p A New Social Network
+
+  .menu.bar
+    nav
+      ul
+        li
+          a(href="/users") All Users
+        li
+          a(href="/users/new") Create New User
+
+
+  #content
