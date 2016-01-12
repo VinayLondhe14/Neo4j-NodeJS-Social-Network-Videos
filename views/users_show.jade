@@ -1,0 +1,28 @@
+extends layout
+
+block content
+  #branding
+    .picture
+      a(href="/users/2")
+        img(src="https://begin-imitate.codio.io:9500/images/avatar-5.jpg", alt="Your profile picture")
+    h1= title
+    p #{title}
+
+  include menu
+  
+  #content
+    .users
+      .user
+        -id = user['user']['_id']
+        .user
+          .avatar
+            a(href="/users/#{id}")
+              img(src=user['user']['properties']['picture'], alt=user['user']['properties']['name'])
+          dl
+            dt Name
+            dd
+              a(href="/users/#{id}")=user['user']['properties']['name']
+            dt Gender
+            dd
+              a(href="/users/#{id}")=user['user']['properties']['gender']
+
