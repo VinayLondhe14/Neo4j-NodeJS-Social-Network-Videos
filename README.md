@@ -3,3 +3,9 @@
 [Watch the videos on YouTube](https://www.youtube.com/playlist?list=PLZLIJjnAGQcbYnsvHVyVJ_l890hWMJ5Zw)
 
 [conpanna.net](http://conpanna.net)
+
+
+1. Avatars
+2. Update user
+3. User page
+4. Friendships

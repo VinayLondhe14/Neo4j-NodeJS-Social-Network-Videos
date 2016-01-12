@@ -44,6 +44,7 @@ router.get('/', function(req, res, next) {
   
   var query = [
     'MATCH (users:User)',
+    'WHERE NOT (ID(users) = 2)',
     'RETURN users'
   ].join('\n');
   var params = {};
@@ -60,7 +61,7 @@ router.get('/', function(req, res, next) {
 });
 
 /* GET show a single user. */
-router.get('/:id', function(req, res, next) {
+router.get('/:id.json', function(req, res, next) {
   var userID = req.param('id');
   var query = [
     'MATCH (user:User)',
@@ -82,6 +83,93 @@ router.get('/:id', function(req, res, next) {
     return res.status(200).json(id=userID,user=user);
   });
 });
+
+
+/* GET show a single user. */
+router.get('/:id', function(req, res, next) {
+  var userID = req.param('id');
+  
+  var query = [
+    'MATCH (user:User)',
+    'WHERE ID(user) = {id}',
+    'RETURN user'
+  ].join('\n');
+  var params = {
+    id: Number(userID)
+  };
+  
+  neo4jDB.cypher({
+    query: query,
+    params: params
+  }, function(err, user){
+    if (err) throw err;
+    
+    console.log(user);
+    
+    res.render('users_show', {title: '', user: user[0]});  
+  });
+});
+
+/* POST current user follow another user. */
+router.post('/:id/follow', function(req, res, next) {
+  var userID = req.param('userID');
+  var followedUserID = req.param('follow');
+  
+  var query = [
+    'MATCH (u1:User), (u2:User)',
+    'WHERE (ID(u1) = {id} AND ID(u2) = {followedUserID})',
+    'CREATE',
+    '(u1)-[:follows]->(u2)',
+    'RETURN u1,u2'
+  ].join('\n');
+  var params = {
+    id: Number(userID),
+    followedUserID: Number(followedUserID)
+  };
+  
+  neo4jDB.cypher({
+    query: query,
+    params: params
+  }, function(err, usersData){
+    if (err) throw err;
+    
+    console.log(usersData);
+    
+    return res.redirect('/users');
+  });
+  
+});
+
+/* GET show followed users by a single user. */
+router.get('/:id/friends/follows', function(req, res, next) {
+  var userID = req.param('id');
+  
+// MATCH (users:User), (user:User)
+// WHERE (user)-[:follows]->(users)
+// RETURN users
+  
+  var query = [
+    'MATCH (user:User), (users:User)',
+    'WHERE ',
+    'ID(user) = {id} ',
+    'AND ',
+    '(user)-[:follows]->(users)',
+    'RETURN users'
+  ].join('\n');
+  var params = {
+    id: Number(userID)
+  };
+  
+  neo4jDB.cypher({
+    query: query,
+    params: params
+  }, function(err, users){
+    if (err) throw err;
+    
+    res.render('users_following', {title: 'Following', users: users});  
+  });
+});
+
 
 
 
