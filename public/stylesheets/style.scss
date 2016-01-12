@@ -102,5 +102,17 @@ a{
     border-radius: 12px;
     margin: 0 0 20px 0;
     padding: 20px;
+    
+    .avatar{
+      float: left;
+      margin: 0 20px 0 0;
+      
+      img{
+        border: 2px solid #efefef;
+        border-radius: 100%;
+        box-shadow: inset 0px 1px 6px #333;
+        display: block;
+      }
+    }
   }
 }
