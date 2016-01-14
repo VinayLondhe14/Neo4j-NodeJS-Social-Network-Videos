@@ -41,13 +41,15 @@ router.get('/new', function(req, res, next) {
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  
+  var loggedInUserID = 2;
   var query = [
     'MATCH (users:User)',
-    'WHERE NOT (ID(users) = 2)',
+    'WHERE NOT (ID(users) = {loggedInUserID})',
     'RETURN users'
   ].join('\n');
-  var params = {};
+  var params = {
+    loggedInUserID: loggedInUserID
+  };
   
   neo4jDB.cypher({
     query: query,
@@ -144,10 +146,6 @@ router.post('/:id/follow', function(req, res, next) {
 router.get('/:id/friends/follows', function(req, res, next) {
   var userID = req.param('id');
   
-// MATCH (users:User), (user:User)
-// WHERE (user)-[:follows]->(users)
-// RETURN users
-  
   var query = [
     'MATCH (user:User), (users:User)',
     'WHERE ',
@@ -169,6 +167,34 @@ router.get('/:id/friends/follows', function(req, res, next) {
     res.render('users_following', {title: 'Following', users: users});  
   });
 });
+
+
+/* GET users that follow the current user. */
+router.get('/:id/friends/followed', function(req, res, next) {
+  var userID = req.param('id');
+  
+  var query = [
+    'MATCH (user:User), (users:User)',
+    'WHERE ',
+    'ID(user) = {id} ',
+    'AND ',
+    '(user)<-[:follows]-(users)',
+    'RETURN users'
+  ].join('\n');
+  var params = {
+    id: Number(userID)
+  };
+  
+  neo4jDB.cypher({
+    query: query,
+    params: params
+  }, function(err, users){
+    if (err) throw err;
+    
+    res.render('users_index', {title: 'Followed By', users: users});  
+  });
+});
+
 
 
 
