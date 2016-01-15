@@ -8,3 +8,16 @@ block content
   include menu
   
   #content
+    .items
+      -websites.forEach(function(website){
+        -website = website["websites"]
+        .item
+          h3=website["properties"]["name"]
+          form(action="/users/2/likes", method="post")
+            fieldset
+              input(type="hidden", name="interest", value="website")
+              input(type="hidden", name="userID", value="2")
+              input(type="hidden", name="websiteID", value=website["_id"])
+              .actions
+                button(type="submit", name="submit") Like
+      -})

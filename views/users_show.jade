@@ -13,7 +13,8 @@ block content
   #content
     .users
       .user
-        -id = user['user']['_id']
+        -id = userData[0]['user']['_id']
+        -user = userData[0]
         .user
           .avatar
             a(href="/users/#{id}")
@@ -26,3 +27,9 @@ block content
             dd
               a(href="/users/#{id}")=user['user']['properties']['gender']
 
+    .items
+      h2 Likes
+      -userData.forEach(function(item){
+        .item
+          h3=item['websites']['properties']['name']
+      -})

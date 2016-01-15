@@ -90,11 +90,11 @@ router.get('/:id.json', function(req, res, next) {
 /* GET show a single user. */
 router.get('/:id', function(req, res, next) {
   var userID = req.param('id');
-  
+
   var query = [
-    'MATCH (user:User)',
-    'WHERE ID(user) = {id}',
-    'RETURN user'
+    'MATCH (user:User), (websites:Website)',
+    'WHERE (ID(user) = {id} AND (user)-[:like]->(websites))',
+    'RETURN user,websites'
   ].join('\n');
   var params = {
     id: Number(userID)
@@ -103,12 +103,10 @@ router.get('/:id', function(req, res, next) {
   neo4jDB.cypher({
     query: query,
     params: params
-  }, function(err, user){
+  }, function(err, userData){
     if (err) throw err;
-    
-    console.log(user);
-    
-    res.render('users_show', {title: '', user: user[0]});  
+        
+    res.render('users_show', {title: '', userData: userData});  
   });
 });
 
@@ -195,6 +193,36 @@ router.get('/:id/friends/followed', function(req, res, next) {
   });
 });
 
+
+/* POST current user follow another user. */
+router.post('/:id/likes', function(req, res, next) {
+  var userID = req.param('userID');
+  var websiteID = req.param('websiteID');
+    
+  var query = [
+    'MATCH (u:User), (w:Website)',
+    'WHERE (ID(u) = {id} AND ID(w) = {websiteID})',
+    'CREATE',
+    '(u)-[:like]->(w)',
+    'RETURN u,w'
+  ].join('\n');
+  var params = {
+    id: Number(userID),
+    websiteID: Number(websiteID)
+  };
+  
+  neo4jDB.cypher({
+    query: query,
+    params: params
+  }, function(err, usersData){
+    if (err) throw err;
+    
+    console.log(usersData);
+    
+    return res.redirect('/users/2');
+  });
+  
+});
 
 
 
