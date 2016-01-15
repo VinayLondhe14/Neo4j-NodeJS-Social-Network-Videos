@@ -224,6 +224,35 @@ router.post('/:id/likes', function(req, res, next) {
   
 });
 
+// friends suggestions
+/* GET users that follow the current user. */
+router.get('/:id/friends/suggestions', function(req, res, next) {
+  var userID = req.param('id');
+
+// MATCH (u:User), (f:User), (w:Website)
+// WHERE (ID(u) = 2 AND (NOT ID(f) = 2) AND (u)-[:like]->(w)<-[:like]-(f))
+// RETURN f
+
+  var query = [
+    'MATCH (u:User), (users:User), (w:Website)',
+    'WHERE ',
+    '(ID(u) = {id} AND (NOT ID(users) = {id}) AND (u)-[:like]->(w)<-[:like]-(users))',
+    'RETURN users'
+  ].join('\n');
+  var params = {
+    id: Number(userID)
+  };
+  
+  neo4jDB.cypher({
+    query: query,
+    params: params
+  }, function(err, users){
+    if (err) throw err;
+    
+    res.render('users_index', {title: 'Suggestions', users: users});  
+  });
+});
+
 
 
 
