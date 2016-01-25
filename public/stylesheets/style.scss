@@ -171,3 +171,40 @@ a{
     }
   }
 }
+
+
+.panel{
+  padding: 20px;
+  
+  legend{
+    margin: 0;
+  }
+  
+  textarea{
+    border: 1px solid #efefef;
+    outline: none;
+    width: 100%;
+    
+    &.ng-touched{
+      min-height: 120px;
+    }
+  }
+  
+  button,
+  input[type="submit"]{
+  background: #3cbfae;
+  border: 1px solid #35be9d;
+  border-radius: 2px;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 12px;
+  padding: 4px 12px;
+
+  &:hover{
+    background: #44c6b4;
+  }
+}
+
+
+}

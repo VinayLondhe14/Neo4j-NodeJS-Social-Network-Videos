@@ -8,6 +8,11 @@ block content
   include menu
   
   #content
+    .panel
+      div(data-new-post)
+  
+    div(data-posts-index, class="panel")
+    
     .items
       -websites.forEach(function(website){
         -website = website["websites"]

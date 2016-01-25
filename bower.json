@@ -1,0 +1,27 @@
+{
+  "name": "workspace",
+  "description": "",
+  "main": "",
+  "authors": [
+    "ConPanna"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/ConPanna/Neo4j-NodeJS-Social-Network-Videos",
+  "moduleType": [
+    "amd"
+  ],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/bower",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.4.9",
+    "bootstrap": "~3.3.6",
+    "angular-route": "~1.4.9"
+  }
+}

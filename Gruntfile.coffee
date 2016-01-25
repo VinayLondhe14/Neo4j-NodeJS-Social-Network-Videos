@@ -22,13 +22,13 @@ module.exports = (grunt) ->
         expend: true
         flatten: true
         files: {
-          "public/javascripts/main.js": "public/javascripts/main.coffee"
+          "public/javascripts/app.js": "public/javascripts/app.coffee"
         }
 
     watch:
       coffee:
         files: [
-          "public/javascripts/main.coffee"
+          "public/javascripts/app.coffee"
         ]
         tasks: ["coffee:compile"]
       sass:

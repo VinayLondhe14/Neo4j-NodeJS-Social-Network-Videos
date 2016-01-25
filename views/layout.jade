@@ -1,8 +1,12 @@
 doctype html
-html(lang="en")
+html(lang="en", "data-ng-app"="Jaja")
   head
     title= title
     link(rel='stylesheet', href='/bower/bootstrap/dist/css/bootstrap.min.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
     block content
+    
+    script(src="/bower/angular/angular.js")
+    script(src="/bower/angular-route/angular-route.js")
+    script(src="/javascripts/app.js")
