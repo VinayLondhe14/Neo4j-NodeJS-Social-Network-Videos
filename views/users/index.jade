@@ -3,8 +3,8 @@ extends ../layout
 block content
   #branding
     .picture
-      a(href="/users/6")
-        img(src="https://begin-imitate.codio.io:9500/images/avatar-5.jpg", alt="Your profile picture")
+      a(href="/users/#{userID}")
+        img(src=currentUser['picture'], alt=currentUser['name'], title=currentUser['name'])
     h1= title
     p #{title}
 
@@ -16,19 +16,19 @@ block content
         -id = user['users']['_id']
         .user
           .avatar
-            a(href="/users/#{id}")
+            a(href="/users/#{userID}")
               img(src=user['users']['properties']['picture'], alt=user['users']['properties']['name'])
           dl
             dt Name
             dd
-              a(href="/users/#{id}")=user['users']['properties']['name']
+              a(href="/users/#{userID}")=user['users']['properties']['name']
             dt Gender
             dd
-              a(href="/users/#{id}")=user['users']['properties']['gender']
+              a(href="/users/#{userID}")=user['users']['properties']['gender']
           .actions
-            form(action="/users/#{id}/follow", method="post")
+            form(action="/users/#{userID}/follow", method="post")
               fieldset
-                input(type="hidden", value=2, name="userID")
+                input(type="hidden", value=userID, name="userID")
                 button(type="submit",name="follow", value=id) Follow
       -})
   

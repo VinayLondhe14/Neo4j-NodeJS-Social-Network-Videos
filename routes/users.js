@@ -191,8 +191,8 @@ router.get('/new', restrictAccess, function(req, res, next) {
 
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
-  var loggedInUserID = res.cookies.userID;
+router.get('/', restrictAccess, function(req, res, next) {
+  var loggedInUserID = req.cookies.userID;
   var query = [
     'MATCH (users:User)',
     'WHERE NOT (ID(users) = {loggedInUserID})',
@@ -233,14 +233,14 @@ router.get('/:id.json', restrictAccess, function(req, res, next) {
     
     console.log(user);
     
-    return res.status(200).json(id=userID,user=user);
+    return res.status(200).json(id=userID, user=user);
   });
 });
 
 
 /* GET show a single user. */
 router.get('/:id', function(req, res, next) {
-  var userID = req.param('id');
+  var userID = req.params['id'];
 
   var query = [
     'MATCH (user:User), (websites:Website)',
@@ -256,6 +256,9 @@ router.get('/:id', function(req, res, next) {
     params: params
   }, function(err, userData){
     if (err) throw err;
+    
+    console.log(userID);
+    console.log (userData);
         
     res.render('users/show', {title: '', userData: userData});  
   });

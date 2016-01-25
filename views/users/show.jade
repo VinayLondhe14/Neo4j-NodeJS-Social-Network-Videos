@@ -3,8 +3,8 @@ extends ../layout
 block content
   #branding
     .picture
-      a(href="/users/2")
-        img(src="https://begin-imitate.codio.io:9500/images/avatar-5.jpg", alt="Your profile picture")
+      a(href="/users/#{userID}")
+        img(src=currentUser['picture'], alt=currentUser['name'], title=currentUser['name'])
     h1= title
     p #{title}
 
@@ -13,19 +13,18 @@ block content
   #content
     .users
       .user
-        -id = userData[0]['user']['_id']
-        -user = userData[0]
         .user
           .avatar
-            a(href="/users/#{id}")
-              img(src=user['user']['properties']['picture'], alt=user['user']['properties']['name'])
+            a(href="/users/#{userID}")
+              img(src=currentUser['picture'], alt=currentUser['name'])
           dl
             dt Name
             dd
-              a(href="/users/#{id}")=user['user']['properties']['name']
+              a(href="/users/#{userID}")=currentUser['name']
             dt Gender
             dd
-              a(href="/users/#{id}")=user['user']['properties']['gender']
+              a(href="/users/#{userID}")=currentUser['gender']
+
 
     .items
       h2 Likes
