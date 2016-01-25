@@ -192,7 +192,7 @@ router.get('/new', restrictAccess, function(req, res, next) {
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  var loggedInUserID = 2;
+  var loggedInUserID = res.cookies.userID;
   var query = [
     'MATCH (users:User)',
     'WHERE NOT (ID(users) = {loggedInUserID})',
@@ -312,6 +312,7 @@ router.get('/:id/friends/follows', restrictAccess, function(req, res, next) {
     params: params
   }, function(err, users){
     if (err) throw err;
+    console.log(users);
     
     res.render('users/following', {title: 'Following', users: users});  
   });
