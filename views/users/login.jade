@@ -1,11 +1,11 @@
-extends layout
+extends ../layout
 
 block content
   #branding
     h1= title
     p #{title}
   
-  include menu
+  include ../menu
 
   #content
     form(action="/users", method="post")

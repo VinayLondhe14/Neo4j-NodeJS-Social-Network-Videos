@@ -1,0 +1,39 @@
+extends ../layout
+
+block content
+  #branding
+    h1= title
+    p #{title}
+  
+  include ../menu
+
+  #content
+    form(action="/users/register", method="post")
+      fieldset
+        .form-group
+          label(for="email") Email
+          .control
+            input(type="email", name="email", id="email")
+
+        .form-group
+          label(for="picture") Picture
+          .control
+            input(type="url", name="picture", id="picutre")
+
+        .form-group
+          label(for="gender") Gender
+          .control
+            select(name="gender", id="gender")
+              option(value="male") Male
+              option(value="female") Female
+
+
+        .form-group
+          label(for="password") Password
+          .control
+            input(type="password", name="password", id="password")
+
+
+
+        .actions
+          input(type="submit", value="Submit", class="btn btn-default")
