@@ -74,7 +74,62 @@ router.get('/login', function(req, res, next){
 
 /* POST /users/login */
 router.post('/login', function(req, res, next){
-  res.status(200);
+  var email = req.body['email'];
+  var password = req.body['password'];
+  var encryptedPassword = crypto.createHmac('sha256',appSecret)
+                  .update(password)
+                  .digest('hex');
+ 
+  // check if data is empty
+  if (!email || !password){
+    // add a message
+    return res.redirect('/users/login');
+  }
+  
+
+  // check if the user exists
+  // MATCH (user:User {email: "username@email.com"}) RETURN user
+  var query = [
+    'MATCH (user:User { email: {email} })',
+    'RETURN user'
+  ].join('\n');
+  var params = {
+    email: email
+  }
+  
+  // encrypt the password
+  var encryptedPassword = crypto.createHmac('sha256',appSecret)
+                  .update(password)
+                  .digest('hex');
+
+  // check if password match
+  neo4jDB.cypher({
+    query: query,
+    params: params
+  }, 
+    function(err, user){
+      if (err) throw err;
+    
+      console.log(user[0]['user']['properties']);
+      // if the user exists check if is active
+      
+      // login the user
+      var userID = user[0]['user']['_id'];
+      var currentUser = user[0]['user']['properties'];
+      res.cookie('userID', userID, {
+        httpOnly: true,
+        domain: 'begin-imitate.codio.io:9500',
+        maxAge: new Date(Date.now() + 9000)
+      });
+      res.cookie('user', currentUser, {
+        httpOnly: true,
+        domain: 'begin-imitate.codio.io:9500',
+        maxAge: new Date(Date.now() + 9000)
+      });
+      
+      res.redirect('/');
+  });
+ 
 });
 
 /* DELETE|GET /users/logout */

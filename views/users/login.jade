@@ -8,17 +8,17 @@ block content
   include ../menu
 
   #content
-    form(action="/users", method="post")
+    form(action="/users/login", method="post")
       fieldset
         .form-group
-          label(for="name") Name
+          label(for="email") email
           .control
-            input(type="text", name="name", id="name")
+            input(type="email", name="email", id="email")
 
         .form-group
-          label(for="gender") Gender
+          label(for="password") Password
           .control
-            input(type="text", name="gender", id="gender")
+            input(type="password", name="password", id="password")
 
 
         .actions

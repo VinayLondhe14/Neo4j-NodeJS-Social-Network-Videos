@@ -13,7 +13,7 @@ block content
         -website = website["websites"]
         .item
           h3=website["properties"]["name"]
-          form(action="/users/2/likes", method="post")
+          form(action="/users/#{userID}/likes", method="post")
             fieldset
               input(type="hidden", name="interest", value="website")
               input(type="hidden", name="userID", value="2")
