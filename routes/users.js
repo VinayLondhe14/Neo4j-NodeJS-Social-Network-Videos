@@ -6,6 +6,17 @@ var crypto = require('crypto');
 var appSecret = process.env.APP_SECRET;
 
 
+//
+//  Helper
+//
+var restrictAccess = function(req, res, next){
+  if (!req.cookies.userID){
+    return res.redirect('/users/login');
+  }
+  
+  next();
+};
+
 /* GET /users/register */
 router.get('/register', function(req, res, next){  
   
@@ -145,7 +156,7 @@ router.get('/logout', function(req, res, next){
 });
 
 /* Post create user. */
-router.post('/', function(req, res, next) {
+router.post('/', restrictAccess, function(req, res, next) {
   var name = req.body['name']
   var gender = req.body['gender']
   var query = [
@@ -174,7 +185,7 @@ router.post('/', function(req, res, next) {
 
 
 /* GET create user. */
-router.get('/new', function(req, res, next) {
+router.get('/new', restrictAccess, function(req, res, next) {
   res.render('users/new', {title: 'Create New User'});  
 });
 
@@ -203,7 +214,7 @@ router.get('/', function(req, res, next) {
 });
 
 /* GET show a single user. */
-router.get('/:id.json', function(req, res, next) {
+router.get('/:id.json', restrictAccess, function(req, res, next) {
   var userID = req.param('id');
   var query = [
     'MATCH (user:User)',
@@ -251,7 +262,7 @@ router.get('/:id', function(req, res, next) {
 });
 
 /* POST current user follow another user. */
-router.post('/:id/follow', function(req, res, next) {
+router.post('/:id/follow', restrictAccess, function(req, res, next) {
   var userID = req.param('userID');
   var followedUserID = req.param('follow');
   
@@ -281,7 +292,7 @@ router.post('/:id/follow', function(req, res, next) {
 });
 
 /* GET show followed users by a single user. */
-router.get('/:id/friends/follows', function(req, res, next) {
+router.get('/:id/friends/follows', restrictAccess, function(req, res, next) {
   var userID = req.param('id');
   
   var query = [
@@ -308,7 +319,7 @@ router.get('/:id/friends/follows', function(req, res, next) {
 
 
 /* GET users that follow the current user. */
-router.get('/:id/friends/followed', function(req, res, next) {
+router.get('/:id/friends/followed', restrictAccess, function(req, res, next) {
   var userID = req.param('id');
   
   var query = [
@@ -335,7 +346,7 @@ router.get('/:id/friends/followed', function(req, res, next) {
 
 
 /* POST current user follow another user. */
-router.post('/:id/likes', function(req, res, next) {
+router.post('/:id/likes', restrictAccess, function(req, res, next) {
   var userID = req.param('userID');
   var websiteID = req.param('websiteID');
     
@@ -366,7 +377,7 @@ router.post('/:id/likes', function(req, res, next) {
 
 // friends suggestions
 /* GET users that follow the current user. */
-router.get('/:id/friends/suggestions', function(req, res, next) {
+router.get('/:id/friends/suggestions', restrictAccess, function(req, res, next) {
   var userID = req.param('id');
 
 // MATCH (u:User), (f:User), (w:Website)
