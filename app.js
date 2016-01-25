@@ -24,7 +24,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Middleware
 app.use(function(req, res, next){
-  res.locals.userID = 2;
+  res.locals.userID = req.cookies.userID;
   res.locals.user = req.cookies.user;
   
   next();

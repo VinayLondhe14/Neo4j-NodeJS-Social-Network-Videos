@@ -117,13 +117,12 @@ router.post('/login', function(req, res, next){
       var userID = user[0]['user']['_id'];
       var currentUser = user[0]['user']['properties'];
       res.cookie('userID', userID, {
-        httpOnly: true,
-        domain: 'begin-imitate.codio.io:9500',
+        domain: 'begin-imitate.codio.io',
         maxAge: new Date(Date.now() + 9000)
+
       });
       res.cookie('user', currentUser, {
-        httpOnly: true,
-        domain: 'begin-imitate.codio.io:9500',
+        domain: 'begin-imitate.codio.io',
         maxAge: new Date(Date.now() + 9000)
       });
       
@@ -135,6 +134,13 @@ router.post('/login', function(req, res, next){
 /* DELETE|GET /users/logout */
 router.get('/logout', function(req, res, next){
   // delete the cookie
+  res.clearCookie('userID', {
+        domain: 'begin-imitate.codio.io'
+      });
+  res.clearCookie('user', {
+        domain: 'begin-imitate.codio.io'
+      });
+
   res.redirect('/users/login');
 });
 
