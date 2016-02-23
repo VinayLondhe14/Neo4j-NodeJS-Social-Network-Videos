@@ -32,6 +32,9 @@ apt-get install neo4j
 `export APP_SECRET=<Your-Secret-Key>`
 `export GRAPH_DB_URL=http://neo4j:neo4j@0.0.0.0`
 
+## Load The Data
+Use this file to load the data:
+````lib/cypher/schema.cypher````
 
 [Watch the videos on YouTube](https://www.youtube.com/playlist?list=PLZLIJjnAGQcY2jZ4SugLveaFXe0eJWelp)
 
