@@ -372,9 +372,11 @@ router.post('/:id/likes', restrictAccess, function(req, res, next) {
   }, function(err, usersData){
     if (err) throw err;
     
+    console.log(userID);
+    console.log(websiteID);
     console.log(usersData);
     
-    return res.redirect('/users/2');
+    return res.redirect('/users/'+userID);
   });
   
 });

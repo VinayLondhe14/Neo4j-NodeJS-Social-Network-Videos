@@ -30,7 +30,8 @@ app.directive("postsIndex", ["Post", (Post) ->
           for d in data.data.postsData
             $scope.posts.push d.p.properties
 
-          $scope.user = data.data.postsData[0].u.properties
+          if data.data.postsData.length > 0
+            $scope.user = data.data.postsData[0].u.properties
       )
   }
 ])
@@ -67,14 +68,18 @@ app.service("Post", ["$http", ($http) ->
 app.controller("PostsController", ["Post", "$scope", (Post, $scope) ->
 
   $scope.posts = []
+  $scope.Post = {
+    body: ""
+  }
   
   $scope.create = (post) ->
     Post.create(post)
       .then((data) ->
-        console.log data.data.postedData
-        body = data.data.postedData[0].p.properties.body
-        console.log body
-        $scope.posts.push body
+        console.log data.data
+        if data.data.postedData
+          body = data.data.postedData[0].p.properties.body
+          console.log body
+          $scope.posts.push body
     )
 
 ])

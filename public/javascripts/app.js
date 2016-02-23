@@ -28,7 +28,9 @@
               d = ref[i];
               $scope.posts.push(d.p.properties);
             }
-            return $scope.user = data.data.postsData[0].u.properties;
+            if (data.data.postsData.length > 0) {
+              return $scope.user = data.data.postsData[0].u.properties;
+            }
           });
         }
       };
@@ -64,13 +66,18 @@
   app.controller("PostsController", [
     "Post", "$scope", function(Post, $scope) {
       $scope.posts = [];
+      $scope.Post = {
+        body: ""
+      };
       return $scope.create = function(post) {
         return Post.create(post).then(function(data) {
           var body;
-          console.log(data.data.postedData);
-          body = data.data.postedData[0].p.properties.body;
-          console.log(body);
-          return $scope.posts.push(body);
+          console.log(data.data);
+          if (data.data.postedData) {
+            body = data.data.postedData[0].p.properties.body;
+            console.log(body);
+            return $scope.posts.push(body);
+          }
         });
       };
     }
