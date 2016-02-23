@@ -22,6 +22,8 @@ Add the package:
 Install the neo4j package:
 apt-get install neo4j
 
+[Video: How to install Neo4j](https://www.youtube.com/watch?v=26_5mzQdnzg)
+
 ### Install Dependencies Using NPM
 `npm install`
 
