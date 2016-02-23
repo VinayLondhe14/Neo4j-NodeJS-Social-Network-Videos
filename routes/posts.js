@@ -29,11 +29,15 @@ router.post('/create.json', restrictAccess, function(req, res ,next){
     'WHERE ID(u) = {userID}',
     'CREATE ',
     '(p:Post {newPost}),',
-    '(u)-[:wrote]->(p)',
-    'RETURN p,u'
+    '(f:Feed {objectName: {objectName}, description: {description} }),',
+    '(u)-[:wrote]->(p),',
+    '(u)-[:createdActivity]->(f)',
+    'RETURN p,u,f'
   ].join('\n');
   var params = {
     userID: Number(userID),
+    objectName: "Post",
+    description: "Wrote a new post",
     newPost: {
       body: body
     }
@@ -50,6 +54,7 @@ router.post('/create.json', restrictAccess, function(req, res ,next){
       console.log(userID);
       console.log(body);
       console.log(postedData);
+    
       res.status(200).json({postedData: postedData});
   });
 

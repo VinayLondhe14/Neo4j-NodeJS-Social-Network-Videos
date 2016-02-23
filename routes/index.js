@@ -6,22 +6,27 @@ var neo4jDB = new neo4j.GraphDatabase(process.env.GRAPH_DB_URL);
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
+  var userID = req.cookies.userID;
   
   var query = [
-    'MATCH (websites:Website)',
-    'RETURN websites'
+    'MATCH (websites:Website),',
+    '(u:User)-[:createdActivity]->(feedItems:Feed),',
+    '(u:User)-[:wrote]->(posts:Post)',
+    'WHERE ID(u)={userID}',
+    'RETURN websites, posts, feedItems'
   ].join('\n');
-  var params = {}
+  var params = {
+    userID: Number(userID)
+  }
   
   neo4jDB.cypher({
     query: query,
     params: params
   }, 
-    function(err, websites){
+    function(err, resultsData){
       if (err) throw err;
     
-      console.log(websites);
-      return res.render('index', { title: 'JAJA', websites: websites });
+      return res.render('index', { title: 'JAJA', resultsData: resultsData });
   });
   
 });
