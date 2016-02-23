@@ -30,7 +30,7 @@ CREATE (u2)-[:like]->(w6)
 CREATE (u3)-[:follows]->(u6)
 CREATE (u3)-[:like]->(w1)
 CREATE (u3)-[:like]->(w2)
-CREATE (u4)-[:like]->(w7)
+CREATE (u3)-[:like]->(w7)
 
 CREATE (u4)-[:follows]->(u1)
 CREATE (u4)-[:follows]->(u2)
