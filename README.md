@@ -33,6 +33,6 @@ apt-get install neo4j
 `export GRAPH_DB_URL=http://neo4j:neo4j@0.0.0.0`
 
 
-[Watch the videos on YouTube](https://www.youtube.com/playlist?list=PLZLIJjnAGQcbYnsvHVyVJ_l890hWMJ5Zw)
+[Watch the videos on YouTube](https://www.youtube.com/playlist?list=PLZLIJjnAGQcY2jZ4SugLveaFXe0eJWelp)
 
 [conpanna.net](http://conpanna.net)
