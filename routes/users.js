@@ -358,12 +358,15 @@ router.post('/:id/likes', restrictAccess, function(req, res, next) {
     'MATCH (u:User), (w:Website)',
     'WHERE (ID(u) = {id} AND ID(w) = {websiteID})',
     'CREATE',
-    '(u)-[:like]->(w)',
-    'RETURN u,w'
+    '(f:Feed {objectName: "Website", description: {description} }),',
+    '(u)-[:like]->(w),',
+    '(u)-[:createdActivity]->(f)',
+    'RETURN u,w,f'
   ].join('\n');
   var params = {
     id: Number(userID),
-    websiteID: Number(websiteID)
+    websiteID: Number(websiteID),
+    description: "liked a website"
   };
   
   neo4jDB.cypher({
