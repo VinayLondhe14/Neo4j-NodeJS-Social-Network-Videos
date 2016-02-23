@@ -34,7 +34,7 @@ apt-get install neo4j
 
 ## Load The Data
 Use this file to load the data:
-````lib/cypher/schema.cypher````
+`lib/cypher/schema.cypher`
 
 [Watch the videos on YouTube](https://www.youtube.com/playlist?list=PLZLIJjnAGQcY2jZ4SugLveaFXe0eJWelp)
 
