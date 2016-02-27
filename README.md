@@ -15,9 +15,11 @@
 Install using apt-get
 
 Add the package:
-`wget -O - http://debian.neo4j.org/neotechnology.gpg.key | apt-key add -`
-`echo 'deb http://debian.neo4j.org/repo stable/' > /etc/apt/sources.list.d/neo4j.list`
-`apt-get -y update`
+```
+wget -O - http://debian.neo4j.org/neotechnology.gpg.key | apt-key add -
+echo 'deb http://debian.neo4j.org/repo stable/' > /etc/apt/sources.list.d/neo4j.list
+apt-get -y update
+```
 
 Install the neo4j package:
 apt-get install neo4j
@@ -25,16 +27,27 @@ apt-get install neo4j
 [Video: How to install Neo4j](https://www.youtube.com/watch?v=26_5mzQdnzg)
 
 ### Install Dependencies Using NPM
-`npm install`
+```
+npm install
+```
 
 ### Define Environment Variables
-`export DEBUG=true`
-`export APP_SECRET=<Your-Secret-Key>`
-`export GRAPH_DB_URL=http://neo4j:neo4j@0.0.0.0`
+```
+export DEBUG=true
+export APP_SECRET=<Your-Secret-Key>
+export GRAPH_DB_URL=http://neo4j:neo4j@0.0.0.0
+```
 
 ## Load The Data
 Use this file to load the data:
-````lib/cypher/schema.cypher````
+```
+cat ./lib/cypher/schema.cypher
+
+# Ubuntu
+cat ./lib/cypher/schema.cypher | cb
+# Mac
+cat ./lib/cypher/schema.cypher | pbcopy
+```
 
 [Watch the videos on YouTube](https://www.youtube.com/playlist?list=PLZLIJjnAGQcY2jZ4SugLveaFXe0eJWelp)
 
